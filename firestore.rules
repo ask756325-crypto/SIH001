@@ -1,0 +1,101 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Global Safety Net - Default Deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Helper functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    // Validation for User profile
+    function isValidUser(data) {
+      return data.keys().hasAll(['uid', 'name', 'type'])
+        && data.uid is string && data.uid == request.auth.uid
+        && data.name is string && data.name.size() > 0 && data.name.size() <= 100
+        && (data.type == 'farmer' || data.type == 'buyer');
+    }
+
+    // Validation for Produce Item
+    function isValidProduce(data) {
+      return data.keys().hasAll(['farmerId', 'cropName', 'quantity', 'pricePerKg', 'status'])
+        && data.farmerId is string && data.farmerId.size() <= 128
+        && data.cropName is string && data.cropName.size() > 0 && data.cropName.size() <= 100
+        && data.quantity is number && data.quantity > 0
+        && data.pricePerKg is number && data.pricePerKg > 0
+        && (data.status == 'available' || data.status == 'pending' || data.status == 'sold');
+    }
+
+    // Validation for Order
+    function isValidOrder(data) {
+      return data.keys().hasAll(['produceId', 'buyerId', 'farmerId', 'amount', 'escrowStatus'])
+        && data.produceId is string && data.produceId.size() <= 128
+        && data.buyerId is string && data.buyerId == request.auth.uid
+        && data.farmerId is string && data.farmerId.size() <= 128
+        && data.amount is number && data.amount > 0
+        && (data.escrowStatus == 'funded' || data.escrowStatus == 'released' || data.escrowStatus == 'disputed');
+    }
+
+    // Users collection: PII isolation, owner-only access
+    match /users/{userId} {
+      allow get: if isOwner(userId);
+      allow list: if false; // Deny broad list of all users to prevent scraping
+      allow create: if isOwner(userId) && isValidId(userId) && isValidUser(incoming());
+      allow update: if isOwner(userId) && isValidUser(incoming());
+      allow delete: if false;
+    }
+
+    // Produce listings: Public read for marketplace & market QR codes
+    match /produce/{produceId} {
+      allow get, list: if true;
+      allow create: if isSignedIn()
+        && isValidId(produceId)
+        && incoming().farmerId == request.auth.uid
+        && isValidProduce(incoming());
+      allow update: if isSignedIn()
+        && (existing().farmerId == request.auth.uid || incoming().diff(existing()).affectedKeys().hasOnly(['status']))
+        && isValidProduce(incoming());
+      allow delete: if isSignedIn() && existing().farmerId == request.auth.uid;
+    }
+
+    // Orders collection: Escrow transactions restricted to buyer & farmer
+    match /orders/{orderId} {
+      allow get: if isSignedIn() && (request.auth.uid == resource.data.buyerId || request.auth.uid == resource.data.farmerId);
+      allow list: if isSignedIn() && (resource.data.buyerId == request.auth.uid || resource.data.farmerId == request.auth.uid);
+      allow create: if isSignedIn()
+        && isValidId(orderId)
+        && incoming().buyerId == request.auth.uid
+        && isValidOrder(incoming());
+      allow update: if isSignedIn()
+        && (request.auth.uid == existing().buyerId || request.auth.uid == existing().farmerId)
+        && incoming().diff(existing()).affectedKeys().hasOnly(['escrowStatus'])
+        && isValidOrder(incoming());
+      allow delete: if false;
+    }
+
+    // Test connection doc for validation
+    match /test/{docId} {
+      allow read: if true;
+    }
+  }
+}

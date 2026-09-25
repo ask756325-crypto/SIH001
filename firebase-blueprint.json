@@ -1,0 +1,69 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile for farmers and buyers with role and verification info",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "Firebase Auth UID" },
+        "name": { "type": "string", "description": "User display name" },
+        "email": { "type": "string", "description": "User email address" },
+        "type": { "type": "string", "enum": ["farmer", "buyer"], "description": "Account type" },
+        "village": { "type": "string", "description": "Village or district name" },
+        "phone": { "type": "string", "description": "Contact phone number" },
+        "isVerified": { "type": "boolean", "description": "Whether Aadhar is verified" },
+        "aadharNumber": { "type": "string", "description": "Masked Aadhar number" },
+        "createdAt": { "type": "string", "description": "Creation ISO timestamp" }
+      },
+      "required": ["uid", "name", "type"]
+    },
+    "ProduceItem": {
+      "title": "ProduceItem",
+      "description": "Produce listing created by farmers for marketplace sale",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique produce document ID" },
+        "farmerId": { "type": "string", "description": "UID of the farmer" },
+        "farmerName": { "type": "string", "description": "Name of the farmer" },
+        "farmerVillage": { "type": "string", "description": "Village where crop was grown" },
+        "cropName": { "type": "string", "description": "Name of the agricultural crop" },
+        "quantity": { "type": "number", "description": "Available stock in kg" },
+        "pricePerKg": { "type": "number", "description": "Price per kilogram in INR" },
+        "status": { "type": "string", "enum": ["available", "pending", "sold"], "description": "Listing status" },
+        "negotiable": { "type": "boolean", "description": "Whether price offer negotiation is accepted" },
+        "imageUrl": { "type": "string", "description": "Crop photo URL" },
+        "postedDate": { "type": "string", "description": "Listing date timestamp" }
+      },
+      "required": ["farmerId", "cropName", "quantity", "pricePerKg", "status"]
+    },
+    "Order": {
+      "title": "Order",
+      "description": "Escrow transaction record between buyer and farmer",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique order ID" },
+        "produceId": { "type": "string", "description": "Produce listing ID" },
+        "buyerId": { "type": "string", "description": "UID of the buyer" },
+        "farmerId": { "type": "string", "description": "UID of the farmer" },
+        "amount": { "type": "number", "description": "Total payment amount in INR" },
+        "escrowStatus": { "type": "string", "enum": ["funded", "released", "disputed"], "description": "Escrow status" },
+        "createdAt": { "type": "string", "description": "Order creation timestamp" }
+      },
+      "required": ["produceId", "buyerId", "farmerId", "amount", "escrowStatus"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profiles restricted to owner read/write"
+    },
+    "/produce/{produceId}": {
+      "schema": "ProduceItem",
+      "description": "Produce listings publicly readable, writable by owner farmer"
+    },
+    "/orders/{orderId}": {
+      "schema": "Order",
+      "description": "Escrow transactions readable and updatable by involved buyer or farmer"
+    }
+  }
+}

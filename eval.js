@@ -1,0 +1,5 @@
+
+const Oe = (e, m) => ({en: e, ml: m});
+const te = (e, m) => ({en: e, ml: m});
+const obj = {Thiruvananthapuram:te("Thiruvananthapuram","\u0D24\u0D3F\u0D30\u0D41\u0D35\u0D28\u0D28\u0D4D\u0D24\u0D2A\u0D41\u0D30\u0D02"),Kochi:te("Kochi","\u0D15\u0D4A\u0D1A\u0D4D\u0D1A\u0D3F"),Kozhikode:te("Kozhikode","\u0D15\u0D4B\u0D34\u0D3F\u0D15\u0D4D\u0D15\u0D4B\u0D1F\u0D4D"),Thrissur:te("Thrissur","\u0D24\u0D43\u0D36\u0D4D\u0D36\u0D42\u0D7C"),Kottayam:te("Kottayam","\u0D15\u0D4B\u0D1F\u0D4D\u0D1F\u0D2F\u0D02"),Palakkad:te("Palakkad","\u0D2A\u0D3E\u0D32\u0D15\u0D4D\u0D15\u0D3E\u0D1F\u0D4D"),Malappuram:te("Malappuram","\u0D2E\u0D32\u0D2A\u0D4D\u0D2A\u0D41\u0D31\u0D02"),Idukki:te("Idukki","\u0D07\u0D1F\u0D41\u0D15\u0D4D\u0D15\u0D3F"),Wayanad:te("Wayanad","\u0D35\u0D2F\u0D28\u0D3E\u0D1F\u0D4D"),Kannur:te("Kannur","\u0D15\u0D23\u0D4D\u0D23\u0D42\u0D7C"),Kasaragod:te("Kasaragod","\u0D15\u0D3E\u0D38\u0D7C\u0D17\u0D4B\u0D21\u0D4D"),Kollam:te("Kollam","\u0D15\u0D4A\u0D32\u0D4D\u0D32\u0D02")};
+console.log(JSON.stringify(obj));
