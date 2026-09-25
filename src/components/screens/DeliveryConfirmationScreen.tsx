@@ -203,7 +203,7 @@ export function DeliveryConfirmationScreen({
                 <div>
                   <div className="text-sm font-semibold text-gray-800">{t.awaitingDelivery}</div>
                   <div className="text-[11px] text-gray-500">
-                    {language === 'en' ? 'Direct transport from Kerala farm' : 'ഫാമിൽ നിന്നും നേരിട്ട് ഡെലിവറി'}
+                    {language === 'en' ? 'Direct transport from Andhra Pradesh farm' : 'ഫാമിൽ നിന്നും നേരിട്ട് ഡെലിവറി'}
                   </div>
                 </div>
               </div>

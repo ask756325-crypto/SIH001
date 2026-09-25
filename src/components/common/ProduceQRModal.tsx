@@ -158,7 +158,7 @@ export function ProduceQRModal({
             {/* Branding badge */}
             <div className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 border border-emerald-200 px-3 py-1 text-xs font-bold text-emerald-800">
               <Sprout className="h-3.5 w-3.5 text-emerald-600" />
-              <span>FarmDirect · {isEn ? 'Direct From Kerala Farm' : 'ഫാമിൽ നിന്നും നേരിട്ട്'}</span>
+              <span>FarmDirect · {isEn ? 'Direct From Andhra Pradesh Farm' : 'ഫാമിൽ നിന്നും നേരിട്ട്'}</span>
             </div>
 
             {/* Produce Header */}

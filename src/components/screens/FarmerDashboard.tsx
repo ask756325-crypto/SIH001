@@ -209,7 +209,7 @@ export function FarmerDashboard({
         {/* Localized Weather & Harvest Forecast Widget */}
         <WeatherForecastWidget
           language={language}
-          defaultRegion={user.village || 'Thiruvananthapuram'}
+          defaultRegion={user.village || 'Guntur'}
         />
 
         {/* Filter Tabs */}

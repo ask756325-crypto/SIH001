@@ -271,7 +271,7 @@ export function BuyerMarketplace({
                   className="w-full h-9 rounded-lg bg-white text-gray-800 px-3 text-xs font-medium border-0 focus:ring-2 focus:ring-emerald-400 cursor-pointer"
                 >
                   <option value="all">
-                    {language === 'ml' ? 'എല്ലാ സ്ഥലങ്ങളും' : language === 'hi' ? 'सभी स्थान' : language === 'te' ? 'అన్ని ప్రాంతాలు' : 'All Locations in Kerala'}
+                    {language === 'ml' ? 'എല്ലാ സ്ഥലങ്ങളും' : language === 'hi' ? 'सभी स्थान' : language === 'te' ? 'అన్ని ప్రాంతాలు' : 'All Locations in Andhra Pradesh'}
                   </option>
                   {uniqueVillages.map((v) => (
                     <option key={v} value={v}>

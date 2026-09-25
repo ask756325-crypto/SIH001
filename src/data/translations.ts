@@ -1594,9 +1594,11 @@ export const userNamesMap: Record<string, { en: string; ml: string; hi?: string;
     "en": "Farm Direct Co.",
     "ml": "ഫാം ഡയറക്ട് കമ്പനി"
   },
-  "Kerala Organics": {
-    "en": "Kerala Organics",
-    "ml": "കേരള ഓർഗാനിക്സ്"
+  "Andhra Pradesh Organics": {
+    "en": "Andhra Pradesh Organics",
+    "ml": "ആന്ധ്ര പ്രദേശ് ഓർഗാനിക്സ്",
+    "hi": "आंध्र प्रदेश ऑर्गेनिक्स",
+    "te": "ఆంధ్రప్రదేశ్ ఆర్గానిక్స్"
   },
   "Spice Route Exports": {
     "en": "Spice Route Exports",
@@ -1688,5 +1690,101 @@ export const villageNamesMap: Record<string, { en: string; ml: string; hi?: stri
     "ml": "കൊല്ലം",
     "hi": "कोल्लम",
     "te": "కొల్లం"
+  },
+  "Guntur": {
+    "en": "Guntur",
+    "ml": "ഗുണ്ടൂർ",
+    "hi": "गुंटूर",
+    "te": "గుంటూరు"
+  },
+  "Vijayawada": {
+    "en": "Vijayawada",
+    "ml": "വിജയവാഡ",
+    "hi": "विजयवाड़ा",
+    "te": "విజయవాడ"
+  },
+  "Kurnool": {
+    "en": "Kurnool",
+    "ml": "കർണൂൽ",
+    "hi": "कर्नूल",
+    "te": "కర్నూలు"
+  },
+  "Visakhapatnam": {
+    "en": "Visakhapatnam",
+    "ml": "വിശാഖപട്ടണം",
+    "hi": "विशाखापट्टनम",
+    "te": "విశాఖపట్నం"
+  },
+  "Tirupati": {
+    "en": "Tirupati",
+    "ml": "തിരുപ്പതി",
+    "hi": "तिरुपति",
+    "te": "తిరుపతి"
+  },
+  "Rajahmundry": {
+    "en": "Rajahmundry",
+    "ml": "രാജമൺഡ്രി",
+    "hi": "राजमुंदरी",
+    "te": "రాజమండ్రి"
+  },
+  "Eluru": {
+    "en": "Eluru",
+    "ml": "ഏലൂർ",
+    "hi": "एलुरु",
+    "te": "ఏలూరు"
+  },
+  "Anantapur": {
+    "en": "Anantapur",
+    "ml": "അനന്തപുരം",
+    "hi": "अनंतपुर",
+    "te": "అనంతపురం"
+  },
+  "Nellore": {
+    "en": "Nellore",
+    "ml": "നെല്ലൂർ",
+    "hi": "नेल्लूर",
+    "te": "నెల్లూరు"
+  },
+  "Chittoor": {
+    "en": "Chittoor",
+    "ml": "ചിറ്റൂർ",
+    "hi": "चित्तूर",
+    "te": "చిత్తూరు"
+  },
+  "Kadapa": {
+    "en": "Kadapa",
+    "ml": "കടപ്പ",
+    "hi": "कडपा",
+    "te": "కడప"
+  },
+  "Ongole": {
+    "en": "Ongole",
+    "ml": "ഒങ്കോൾ",
+    "hi": "ओंगोल",
+    "te": "ఒంగోలు"
+  },
+  "Srikakulam": {
+    "en": "Srikakulam",
+    "ml": "ശ്രീകാകുളം",
+    "hi": "श्रीकाकुलम",
+    "te": "శ్రీకాకుళం"
+  },
+  "Vizianagaram": {
+    "en": "Vizianagaram",
+    "ml": "വിജയനഗരം",
+    "hi": "विजयनगरम",
+    "te": "విజయనగరం"
+  },
+  "Kakinada": {
+    "en": "Kakinada",
+    "ml": "കാക്കിനട",
+    "hi": "काकीनाडा",
+    "te": "కాకినాడ"
+  },
+  "Nandyal": {
+    "en": "Nandyal",
+    "ml": "നന്ത്യാൽ",
+    "hi": "नंद्याल",
+    "te": "నంద్యాల"
   }
 };

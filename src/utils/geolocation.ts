@@ -12,19 +12,25 @@ export interface LocationResult {
 }
 
 // Major districts with coordinate centroids for smart nearest district resolution
-const KERALA_DISTRICTS: { name: string; lat: number; lng: number }[] = [
+const AP_AND_INDIAN_DISTRICTS: { name: string; lat: number; lng: number }[] = [
+  { name: 'Guntur', lat: 16.3067, lng: 80.4365 },
+  { name: 'Vijayawada', lat: 16.5062, lng: 80.6480 },
+  { name: 'Kurnool', lat: 15.8281, lng: 78.0373 },
+  { name: 'Visakhapatnam', lat: 17.6868, lng: 83.2185 },
+  { name: 'Tirupati', lat: 13.6288, lng: 79.4192 },
+  { name: 'Rajahmundry', lat: 17.0005, lng: 81.8040 },
+  { name: 'Eluru', lat: 16.7107, lng: 81.0952 },
+  { name: 'Anantapur', lat: 14.6819, lng: 77.6006 },
+  { name: 'Nellore', lat: 14.4426, lng: 79.9865 },
+  { name: 'Chittoor', lat: 13.2172, lng: 79.1003 },
+  { name: 'Kadapa', lat: 14.4673, lng: 78.8242 },
+  { name: 'Ongole', lat: 15.5057, lng: 80.0499 },
+  { name: 'Srikakulam', lat: 18.2969, lng: 83.8966 },
+  { name: 'Vizianagaram', lat: 18.1067, lng: 83.3956 },
+  { name: 'Kakinada', lat: 16.9891, lng: 82.2475 },
+  { name: 'Nandyal', lat: 15.4886, lng: 78.4836 },
   { name: 'Thiruvananthapuram', lat: 8.5241, lng: 76.9366 },
-  { name: 'Kollam', lat: 8.8932, lng: 76.6141 },
-  { name: 'Kottayam', lat: 9.5916, lng: 76.5222 },
-  { name: 'Idukki', lat: 9.8493, lng: 76.9804 },
   { name: 'Kochi', lat: 9.9312, lng: 76.2673 },
-  { name: 'Thrissur', lat: 10.5276, lng: 76.2144 },
-  { name: 'Palakkad', lat: 10.7867, lng: 76.6548 },
-  { name: 'Malappuram', lat: 11.0732, lng: 76.0740 },
-  { name: 'Kozhikode', lat: 11.2588, lng: 75.7804 },
-  { name: 'Wayanad', lat: 11.6854, lng: 76.1320 },
-  { name: 'Kannur', lat: 11.8745, lng: 75.3704 },
-  { name: 'Kasaragod', lat: 12.5102, lng: 74.9852 },
 ];
 
 function getDistance(lat1: number, lon1: number, lat2: number, lon2: number): number {
@@ -52,11 +58,11 @@ export function requestUserLocation(): Promise<LocationResult> {
       (pos) => {
         const { latitude, longitude, accuracy } = pos.coords;
 
-        // Find closest Kerala/Indian district
-        let closest = KERALA_DISTRICTS[0];
+        // Find closest Andhra Pradesh/Indian district
+        let closest = AP_AND_INDIAN_DISTRICTS[0];
         let minDistance = Infinity;
 
-        for (const dist of KERALA_DISTRICTS) {
+        for (const dist of AP_AND_INDIAN_DISTRICTS) {
           const d = getDistance(latitude, longitude, dist.lat, dist.lng);
           if (d < minDistance) {
             minDistance = d;

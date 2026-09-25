@@ -56,8 +56,8 @@ export function AIFarmStudioModal({
   // --- 2. Image Studio State ---
   const [imagePrompt, setImagePrompt] = useState(
     activeProduce
-      ? `Promotional farm stand poster for fresh organic ${activeProduce.cropName} from Kerala, sunlit morning with raindrops`
-      : 'Artisanal market stall sign for fresh organic Kerala spices and bananas'
+      ? `Promotional farm stand poster for fresh organic ${activeProduce.cropName} from Andhra Pradesh, sunlit morning with raindrops`
+      : 'Artisanal market stall sign for fresh organic Andhra Pradesh chili, mangoes and tomatoes'
   );
   const [generatedImage, setGeneratedImage] = useState<string | null>(activeProduce?.imageUrl || null);
   const [isGeneratingImage, setIsGeneratingImage] = useState(false);
@@ -65,8 +65,8 @@ export function AIFarmStudioModal({
   // --- 3. Veo Video State ---
   const [videoPrompt, setVideoPrompt] = useState(
     activeProduce
-      ? `Cinematic smooth camera fly-through of freshly harvested ${activeProduce.cropName} on a lush farm in Kerala`
-      : 'Golden sunlight illuminating fresh harvest produce baskets on a traditional Kerala farm'
+      ? `Cinematic smooth camera fly-through of freshly harvested ${activeProduce.cropName} on a lush farm in Andhra Pradesh`
+      : 'Golden sunlight illuminating fresh harvest produce baskets on a traditional Andhra Pradesh farm'
   );
   const [aspectRatio, setAspectRatio] = useState<'16:9' | '9:16'>('16:9');
   const [generatedVideoUrl, setGeneratedVideoUrl] = useState<string | null>(null);
@@ -74,7 +74,7 @@ export function AIFarmStudioModal({
 
   // --- 4. Lyria Music State ---
   const [musicPrompt, setMusicPrompt] = useState(
-    'Upbeat acoustic Kerala folk melody with acoustic chenda percussion and flute for a market stall'
+    'Upbeat acoustic Andhra Pradesh folk melody with traditional nadaswaram, mridangam and flute for a village market stall'
   );
   const [generatedAudioUrl, setGeneratedAudioUrl] = useState<string | null>(null);
   const [isGeneratingMusic, setIsGeneratingMusic] = useState(false);
@@ -320,7 +320,7 @@ export function AIFarmStudioModal({
                     onClick={() => {
                       setIsRecording(!isRecording);
                       if (!isRecording) {
-                        handleSendVoiceText(isEn ? 'Hello! Tell me current wholesale prices for Kerala crops.' : 'നമസ്കാരം! ഇന്നത്തെ കേരള കാർഷിക വിപണി വില പറയൂ.');
+                        handleSendVoiceText(isEn ? 'Hello! Tell me current wholesale prices for Andhra Pradesh crops.' : 'నమస్కారం! ఆంధ్రప్రదేశ్ వ్యవసాయ మార్కెట్ ధరలు చెప్పండి.');
                       }
                     }}
                     className={`h-20 w-20 rounded-full flex items-center justify-center shadow-lg transition-all cursor-pointer ${

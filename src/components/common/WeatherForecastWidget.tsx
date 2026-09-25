@@ -6,7 +6,6 @@ import {
   Sun,
   Wind,
   Droplets,
-  Thermometer,
   Calendar,
   RefreshCw,
   Search,
@@ -48,26 +47,28 @@ interface GroundingSource {
   uri: string;
 }
 
-const KERALA_DISTRICTS = [
-  'Thiruvananthapuram',
-  'Wayanad',
-  'Palakkad',
-  'Kozhikode',
-  'Thrissur',
-  'Ernakulam',
-  'Kottayam',
-  'Idukki',
-  'Alappuzha',
-  'Malappuram',
-  'Kannur',
-  'Kasaragod',
-  'Kollam',
-  'Pathanamthitta',
+export const ANDHRA_PRADESH_DISTRICTS = [
+  'Guntur',
+  'Vijayawada',
+  'Kurnool',
+  'Visakhapatnam',
+  'Tirupati',
+  'Rajahmundry',
+  'Eluru',
+  'Anantapur',
+  'Nellore',
+  'Chittoor',
+  'Kadapa',
+  'Ongole',
+  'Srikakulam',
+  'Vizianagaram',
+  'Kakinada',
+  'Nandyal',
 ];
 
 export function WeatherForecastWidget({
   language,
-  defaultRegion = 'Thiruvananthapuram',
+  defaultRegion = 'Guntur',
 }: WeatherForecastWidgetProps) {
   const [region, setRegion] = useState(defaultRegion);
   const [weatherData, setWeatherData] = useState<WeatherReport | null>(null);
@@ -75,6 +76,108 @@ export function WeatherForecastWidget({
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [isLive, setIsLive] = useState<boolean>(true);
+
+  const t = {
+    en: {
+      title: 'Localized Weather & Harvest Advisory (Andhra Pradesh)',
+      liveSearch: 'Live Search',
+      subtitle: 'Grounded with Google Search for Andhra Pradesh harvest timing and Mandi transit planning',
+      refresh: 'Refresh Forecast',
+      loadingTitle: (dist: string) => `Retrieving Google Search weather data for ${dist}, Andhra Pradesh...`,
+      loadingSub: 'Analyzing rainfall probability, humidity, and optimal harvest windows',
+      apState: 'Andhra Pradesh',
+      liveUpdated: 'Updated live via Google Search grounding',
+      humidity: 'Humidity',
+      highMoldRisk: 'High moisture / mold risk',
+      optimalDrying: 'Optimal drying',
+      rainChance: 'Rain Chance',
+      wind: 'wind',
+      harvestAdvice: 'Harvest Planning Advice',
+      salesAdvice: 'Sales & Mandi Transport',
+      harvestWindow: '3-Day Harvest Window',
+      sources: 'Sources:',
+      error: 'Unable to load real-time weather. Displaying offline agricultural advisory.',
+    },
+    te: {
+      title: 'స్థానిక వాతావరణం & పంట కోత సలహా (ఆంధ్రప్రదేశ్)',
+      liveSearch: 'లైవ్ సెర్చ్',
+      subtitle: 'ఆంధ్రప్రదేశ్ పంట కోత సమయం మరియు మార్కెట్ రవాణా ప్రణాళిక కోసం గూగుల్ సెర్చ్ ఆధారం',
+      refresh: 'తాజాకరించు',
+      loadingTitle: (dist: string) => `${dist}, ఆంధ్రప్రదేశ్ వాతావరణ సమాచారం సేకరిస్తోంది...`,
+      loadingSub: 'వర్షపాత అవకాశం, తేమ మరియు అనుకూలమైన కోత సమయాల విశ్లేషణ',
+      apState: 'ఆంధ్రప్రదేశ్',
+      liveUpdated: 'గూగుల్ సెర్చ్ ద్వారా ప్రత్యక్షంగా నవీకరించబడింది',
+      humidity: 'తేమ శాతం',
+      highMoldRisk: 'అధిక తేమ / బూజు ప్రమాదం',
+      optimalDrying: 'ఆరబెట్టడానికి అనుకూలం',
+      rainChance: 'వర్షం అవకాశం',
+      wind: 'గాలి',
+      harvestAdvice: 'పంట కోత ప్రణాళిక సలహా',
+      salesAdvice: 'అమ్మకాలు & మార్కెట్ యార్డు రవాణా',
+      harvestWindow: '3 రోజుల కోత విండో',
+      sources: 'మూలాలు:',
+      error: 'రియల్-టైమ్ వాతావరణం లోడ్ కాలేదు. ఆఫ్‌లైన్ వ్యవసాయ సలహా చూపబడుతోంది.',
+    },
+    hi: {
+      title: 'स्थानीय मौसम और फसल कटाई सलाह (आंध्र प्रदेश)',
+      liveSearch: 'लाइव सर्च',
+      subtitle: 'आंध्र प्रदेश में फसल कटाई और मंडी परिवहन योजना के लिए गूगल सर्च से संचालित',
+      refresh: 'ताज़ा करें',
+      loadingTitle: (dist: string) => `${dist}, आंध्र प्रदेश के लिए लाइव मौसम डेटा प्राप्त किया जा रहा है...`,
+      loadingSub: 'वर्षा की संभावना, आर्द्रता और फसल कटाई समय का विश्लेषण',
+      apState: 'आंध्र प्रदेश',
+      liveUpdated: 'गूगल सर्च ग्राउंडिंग के जरिए लाइव अपडेटेड',
+      humidity: 'आर्द्रता',
+      highMoldRisk: 'अधिक नमी का जोखिम',
+      optimalDrying: 'सुखाने के लिए उत्तम',
+      rainChance: 'बारिश की संभावना',
+      wind: 'हवा',
+      harvestAdvice: 'फसल कटाई योजना सलाह',
+      salesAdvice: 'बिक्री और मंडी परिवहन',
+      harvestWindow: '3-दिवसीय कटाई विंडो',
+      sources: 'स्रोत:',
+      error: 'रीयल-टाइम मौसम लोड करने में असमर्थ। ऑफ़लाइन कृषि सलाह प्रदर्शित की जा रही है।',
+    },
+    ml: {
+      title: 'പ്രാദേശിക കാലാവസ്ഥയും വിളവെടുപ്പ് ഉപദേശവും (ആന്ധ്ര പ്രദേശ്)',
+      liveSearch: 'തത്സമയം',
+      subtitle: 'ആന്ധ്ര പ്രദേശ് വിളവെടുപ്പ് ആസൂത്രണത്തിനും മാണ്ഡി ഗതാഗതത്തിനുമുള്ള തത്സമയ കാലാവസ്ഥ വിശകലനം',
+      refresh: 'പുതുക്കുക',
+      loadingTitle: (dist: string) => `${dist}, ആന്ധ്ര പ്രദേശ് കാലാവസ്ഥാ വിവരങ്ങൾ ശേഖരിക്കുന്നു...`,
+      loadingSub: 'മഴ സാധ്യതയും ഈർപ്പവും വിശകലനം ചെയ്യുന്നു',
+      apState: 'ആന്ധ്ര പ്രദേശ്',
+      liveUpdated: 'തത്സമയ വിവരങ്ങൾ',
+      humidity: 'ഈർപ്പം',
+      highMoldRisk: 'ഉയർന്ന ഈർപ്പം',
+      optimalDrying: 'അനുയോജ്യം',
+      rainChance: 'മഴ സാധ്യത',
+      wind: 'കാറ്റ്',
+      harvestAdvice: 'വിളവെടുപ്പ് ഉപദേശം',
+      salesAdvice: 'വിപണനവും ഗതാഗതവും',
+      harvestWindow: 'അടുത്ത 3 ദിവസത്തെ പ്രവചനം',
+      sources: 'ഉറവിടങ്ങൾ:',
+      error: 'കാലാവസ്ഥ വിവരങ്ങൾ ലഭ്യമാക്കാൻ സാധിച്ചില്ല. ഓഫ്‌ലൈൻ ഉപദേശം കാണിക്കുന്നു.',
+    },
+  }[language] || {
+    title: 'Localized Weather & Harvest Advisory (Andhra Pradesh)',
+    liveSearch: 'Live Search',
+    subtitle: 'Grounded with Google Search for Andhra Pradesh harvest timing and Mandi transit planning',
+    refresh: 'Refresh Forecast',
+    loadingTitle: (dist: string) => `Retrieving Google Search weather data for ${dist}, Andhra Pradesh...`,
+    loadingSub: 'Analyzing rainfall probability, humidity, and optimal harvest windows',
+    apState: 'Andhra Pradesh',
+    liveUpdated: 'Updated live via Google Search grounding',
+    humidity: 'Humidity',
+    highMoldRisk: 'High moisture / mold risk',
+    optimalDrying: 'Optimal drying',
+    rainChance: 'Rain Chance',
+    wind: 'wind',
+    harvestAdvice: 'Harvest Planning Advice',
+    salesAdvice: 'Sales & Mandi Transport',
+    harvestWindow: '3-Day Harvest Window',
+    sources: 'Sources:',
+    error: 'Unable to load real-time weather. Displaying offline agricultural advisory.',
+  };
 
   const fetchWeather = async (targetRegion: string) => {
     setIsLoading(true);
@@ -100,11 +203,7 @@ export function WeatherForecastWidget({
       }
     } catch (err: any) {
       console.error('Weather fetch error:', err);
-      setError(
-        language === 'en'
-          ? 'Unable to load real-time weather. Displaying offline agricultural advisory.'
-          : 'കാലാവസ്ഥ വിവരങ്ങൾ ലഭ്യമാക്കാൻ സാധിച്ചില്ല. ഓഫ്‌ലൈൻ ഉപദേശം കാണിക്കുന്നു.'
-      );
+      setError(t.error);
     } finally {
       setIsLoading(false);
     }
@@ -115,8 +214,9 @@ export function WeatherForecastWidget({
   }, [region, language]);
 
   const getTranslatedDistrict = (dist: string): string => {
-    if (language === 'ml' && villageNamesMap[dist]) {
-      return villageNamesMap[dist].ml;
+    if (villageNamesMap[dist]) {
+      const entry = (villageNamesMap[dist] as any)[language];
+      if (entry) return entry;
     }
     return dist;
   };
@@ -143,19 +243,17 @@ export function WeatherForecastWidget({
           <div>
             <div className="flex items-center gap-2">
               <h2 className="text-base sm:text-lg font-bold text-gray-900 leading-tight">
-                {language === 'en' ? 'Localized Weather & Harvest Advisory' : 'കാലാവസ്ഥയും വിളവെടുപ്പ് ഉപദേശവും'}
+                {t.title}
               </h2>
               {isLive && (
                 <span className="flex items-center gap-1 rounded-full bg-emerald-100 px-2 py-0.5 text-[10px] font-bold text-emerald-800 border border-emerald-300">
                   <Sparkles className="h-2.5 w-2.5 text-emerald-600" />
-                  <span>{language === 'en' ? 'Live Search' : 'തത്സമയം'}</span>
+                  <span>{t.liveSearch}</span>
                 </span>
               )}
             </div>
             <p className="text-xs text-gray-500 mt-0.5">
-              {language === 'en'
-                ? 'Grounded with Google Search for precision harvest timing and transit planning'
-                : 'വിളവെടുപ്പിനും വിപണനത്തിനുമുള്ള തത്സമയ കാലാവസ്ഥ വിശകലനം'}
+              {t.subtitle}
             </p>
           </div>
         </div>
@@ -170,7 +268,7 @@ export function WeatherForecastWidget({
               disabled={isLoading}
               className="h-9 rounded-lg border border-emerald-300 bg-white pl-8 pr-7 text-xs font-semibold text-gray-800 shadow-2xs hover:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 cursor-pointer disabled:opacity-50"
             >
-              {KERALA_DISTRICTS.map((dist) => (
+              {ANDHRA_PRADESH_DISTRICTS.map((dist) => (
                 <option key={dist} value={dist}>
                   {getTranslatedDistrict(dist)}
                 </option>
@@ -183,7 +281,7 @@ export function WeatherForecastWidget({
             onClick={() => fetchWeather(region)}
             disabled={isLoading}
             className="flex h-9 w-9 items-center justify-center rounded-lg border border-emerald-300 bg-white text-emerald-700 hover:bg-emerald-50 transition-colors cursor-pointer shadow-2xs disabled:opacity-50"
-            title={language === 'en' ? 'Refresh Forecast' : 'പുതുക്കുക'}
+            title={t.refresh}
           >
             <RefreshCw className={`h-4 w-4 ${isLoading ? 'animate-spin text-emerald-600' : ''}`} />
           </button>
@@ -197,14 +295,10 @@ export function WeatherForecastWidget({
             <CloudSun className="h-10 w-10 text-emerald-600 animate-bounce" />
           </div>
           <div className="text-sm font-semibold text-gray-700">
-            {language === 'en'
-              ? `Retrieving Google Search weather data for ${getTranslatedDistrict(region)}...`
-              : `${getTranslatedDistrict(region)} കാലാവസ്ഥാ വിവരങ്ങൾ ശേഖരിക്കുന്നു...`}
+            {t.loadingTitle(getTranslatedDistrict(region))}
           </div>
           <p className="text-xs text-gray-400">
-            {language === 'en'
-              ? 'Analyzing rainfall probability, humidity, and optimal harvest windows'
-              : 'മഴ സാധ്യതയും ഈർപ്പവും വിശകലനം ചെയ്യുന്നു'}
+            {t.loadingSub}
           </p>
         </div>
       ) : weatherData ? (
@@ -215,7 +309,7 @@ export function WeatherForecastWidget({
             <div className="md:col-span-2 rounded-xl bg-white p-4 border border-emerald-100 shadow-2xs flex items-center justify-between">
               <div className="space-y-1">
                 <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                  {getTranslatedDistrict(weatherData.region)}, Kerala
+                  {getTranslatedDistrict(weatherData.region)}, {t.apState}
                 </span>
                 <div className="flex items-baseline gap-2">
                   <span className="text-4xl font-black text-gray-900 tracking-tight">
@@ -226,7 +320,7 @@ export function WeatherForecastWidget({
                   </span>
                 </div>
                 <div className="text-[11px] text-gray-500">
-                  {language === 'en' ? 'Updated live via Google Search grounding' : 'തത്സമയ വിവരങ്ങൾ'}
+                  {t.liveUpdated}
                 </div>
               </div>
               <div className="p-2 rounded-2xl bg-emerald-50/80 border border-emerald-100">
@@ -237,15 +331,15 @@ export function WeatherForecastWidget({
             {/* Humidity */}
             <div className="rounded-xl bg-white p-4 border border-emerald-100 shadow-2xs flex flex-col justify-between">
               <div className="flex items-center justify-between text-gray-500 text-xs">
-                <span>{language === 'en' ? 'Humidity' : 'ഈർപ്പം'}</span>
+                <span>{t.humidity}</span>
                 <Droplets className="h-4 w-4 text-blue-500" />
               </div>
               <div className="mt-2">
                 <span className="text-2xl font-bold text-gray-900">{weatherData.humidity}%</span>
                 <span className="block text-[11px] text-gray-500 mt-0.5">
-                  {weatherData.humidity > 80
-                    ? language === 'en' ? 'High mold risk' : 'ഉയർന്ന ഈർപ്പം'
-                    : language === 'en' ? 'Optimal drying' : 'അനുയോജ്യം'}
+                  {weatherData.humidity > 75
+                    ? t.highMoldRisk
+                    : t.optimalDrying}
                 </span>
               </div>
             </div>
@@ -253,7 +347,7 @@ export function WeatherForecastWidget({
             {/* Rain Chance & Wind */}
             <div className="rounded-xl bg-white p-4 border border-emerald-100 shadow-2xs flex flex-col justify-between">
               <div className="flex items-center justify-between text-gray-500 text-xs">
-                <span>{language === 'en' ? 'Rain Chance' : 'മഴ സാധ്യത'}</span>
+                <span>{t.rainChance}</span>
                 <CloudRain className="h-4 w-4 text-blue-600" />
               </div>
               <div className="mt-2">
@@ -262,7 +356,7 @@ export function WeatherForecastWidget({
                 </span>
                 <span className="block text-[11px] text-gray-500 mt-0.5">
                   <Wind className="h-3 w-3 inline mr-1 text-gray-400" />
-                  {weatherData.windSpeedKm} km/h {language === 'en' ? 'wind' : 'കാറ്റ്'}
+                  {weatherData.windSpeedKm} km/h {t.wind}
                 </span>
               </div>
             </div>
@@ -274,7 +368,7 @@ export function WeatherForecastWidget({
             <div className="rounded-xl bg-emerald-50/80 border border-emerald-200/90 p-3.5 space-y-1.5">
               <div className="flex items-center gap-2 text-emerald-900 font-bold text-xs uppercase tracking-wide">
                 <CheckCircle2 className="h-4 w-4 text-emerald-700 shrink-0" />
-                <span>{language === 'en' ? 'Harvest Planning Advice' : 'വിളവെടുപ്പ് ഉപദേശം'}</span>
+                <span>{t.harvestAdvice}</span>
               </div>
               <p className="text-xs text-emerald-900 leading-relaxed font-medium">
                 {weatherData.harvestAdvisory}
@@ -285,7 +379,7 @@ export function WeatherForecastWidget({
             <div className="rounded-xl bg-amber-50/80 border border-amber-200/90 p-3.5 space-y-1.5">
               <div className="flex items-center gap-2 text-amber-900 font-bold text-xs uppercase tracking-wide">
                 <AlertTriangle className="h-4 w-4 text-amber-700 shrink-0" />
-                <span>{language === 'en' ? 'Sales & Mandi Transport' : 'വിപണനവും ഗതാഗതവും'}</span>
+                <span>{t.salesAdvice}</span>
               </div>
               <p className="text-xs text-amber-900 leading-relaxed font-medium">
                 {weatherData.salesAdvisory}
@@ -298,7 +392,7 @@ export function WeatherForecastWidget({
             <div className="rounded-xl bg-white p-3.5 border border-emerald-100 shadow-2xs">
               <div className="flex items-center gap-1.5 text-xs font-bold text-gray-700 mb-2.5">
                 <Calendar className="h-3.5 w-3.5 text-emerald-600" />
-                <span>{language === 'en' ? '3-Day Harvest Window' : 'അടുത്ത 3 ദിവസത്തെ പ്രവചനം'}</span>
+                <span>{t.harvestWindow}</span>
               </div>
 
               <div className="grid grid-cols-3 gap-2 divide-x divide-gray-100">
@@ -328,7 +422,7 @@ export function WeatherForecastWidget({
             <div className="flex flex-wrap items-center gap-2 pt-2 text-[11px] text-gray-500">
               <span className="font-semibold text-gray-600 flex items-center gap-1">
                 <Search className="h-3 w-3 text-emerald-600" />
-                <span>{language === 'en' ? 'Sources:' : 'ഉറവിടങ്ങൾ:'}</span>
+                <span>{t.sources}</span>
               </span>
               {sources.slice(0, 3).map((src, sIdx) => (
                 <a

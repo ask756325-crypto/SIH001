@@ -121,7 +121,7 @@ export function ChatScreen({
           "What's the harvest date and freshness?",
           'Is the price negotiable for bulk?',
           'Can you deliver by tomorrow morning?',
-          'Can I visit your farm in Kerala?',
+          'Can I visit your farm in Andhra Pradesh?',
           'Is this 100% organic and pesticide-free?',
         ]
       : [

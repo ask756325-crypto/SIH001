@@ -95,8 +95,8 @@ export function TutorialScreen({
                 </h2>
                 <p className="text-sm text-gray-600">
                   {language === 'en'
-                    ? 'All features engineered specifically for Kerala rural and commercial markets'
-                    : 'കേരളത്തിലെ കർഷകർക്കും വാങ്ങുന്നവർക്കുമായി പ്രത്യേകം രൂപകൽപ്പന ചെയ്ത സവിശേഷതകൾ'}
+                    ? 'All features engineered specifically for Andhra Pradesh rural and commercial markets'
+                    : 'ആന്ധ്ര പ്രദേശിലെ കർഷകർക്കും വാങ്ങുന്നവർക്കുമായി പ്രത്യേകം രൂപകൽപ്പന ചെയ്ത സവിശേഷതകൾ'}
                 </p>
               </div>
 

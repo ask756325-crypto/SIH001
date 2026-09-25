@@ -55,7 +55,7 @@ wss.on('connection', async (clientWs: WebSocket) => {
             voiceConfig: { prebuiltVoiceConfig: { voiceName: 'Zephyr' } },
           },
           systemInstruction:
-            'You are FarmDirect Voice Assistant for Kerala farmers and buyers. Answer questions about crop market rates, weather forecasts, harvest techniques, soil health, and escrow trading in English or Malayalam concisely.',
+            'You are FarmDirect Voice Assistant for Andhra Pradesh farmers and buyers. Answer questions about crop market rates, weather forecasts, harvest techniques, soil health, and escrow trading in English or Telugu concisely.',
         },
         callbacks: {
           onmessage: (message: any) => {
@@ -100,7 +100,7 @@ wss.on('connection', async (clientWs: WebSocket) => {
           // Simulated voice response
           clientWs.send(
             JSON.stringify({
-              text: `FarmDirect Voice: Received prompt "${payload.text || 'Voice input'}". In Kerala markets today, Nendran Banana and Cardamom are showing strong buyer demand.`,
+              text: `FarmDirect Voice: Received prompt "${payload.text || 'Voice input'}". In Andhra Pradesh markets today, Guntur Chili and Amaravati Tomato are showing strong buyer demand.`,
             })
           );
         }
@@ -127,27 +127,27 @@ wss.on('connection', async (clientWs: WebSocket) => {
 
 // 1. Google Search Grounding - Weather Forecast & Advisory
 app.post('/api/weather', async (req, res) => {
-  const { region = 'Thiruvananthapuram', language = 'en' } = req.body;
+  const { region = 'Guntur', language = 'en' } = req.body;
 
   try {
     if (!process.env.GEMINI_API_KEY) {
       throw new Error('GEMINI_API_KEY not configured');
     }
 
-    const prompt = `Current real-time weather and agricultural forecast for ${region}, Kerala, India.
+    const prompt = `Current real-time weather and agricultural forecast for ${region}, Andhra Pradesh, India.
 Today's date is ${new Date().toISOString().split('T')[0]}.
-Search Google for current live weather in ${region}, Kerala, India and the 3-day forecast.
-Return a clean JSON object representing the localized weather report and harvest/sales planning advisory for local Kerala farmers.
+Search Google for current live weather in ${region}, Andhra Pradesh, India and the 3-day forecast.
+Return a clean JSON object representing the localized weather report and harvest/sales planning advisory for local Andhra Pradesh farmers.
 Output format:
 {
   "region": "${region}",
   "currentTemp": <number in Celsius>,
-  "condition": "<e.g. Sunny, Partly Cloudy, Heavy Rain, Light Showers, Humid, Thunderstorms>",
+  "condition": "<e.g. Sunny, Partly Cloudy, Heavy Rain, Light Showers, Humid, Thunderstorms, Warm & Breezy>",
   "humidity": <number between 0 and 100>,
   "rainfallChance": <number between 0 and 100>,
   "windSpeedKm": <number in km/h>,
-  "harvestAdvisory": "<2-3 actionable sentences advising farmers on whether to harvest, dry crops in the sun, spray organic pest controls, or secure stored crops>",
-  "salesAdvisory": "<1-2 actionable sentences advising farmers on market dispatch, road transport conditions, and buyer demand timing given the weather>",
+  "harvestAdvisory": "<2-3 actionable sentences advising farmers on whether to harvest, dry crops in the sun, spray pest controls, or secure stored crops in Andhra Pradesh>",
+  "salesAdvisory": "<1-2 actionable sentences advising farmers on APMC market dispatch, road transport conditions, and buyer demand timing across AP mandis>",
   "forecast": [
     {
       "day": "<e.g. Today, Tomorrow, Day 3>",
@@ -200,29 +200,40 @@ IMPORTANT: Return ONLY raw JSON object.`;
   } catch (err: any) {
     const fallbackData = {
       region,
-      currentTemp: 29,
-      condition: 'Partly Cloudy with Humid Breeze',
-      humidity: 78,
-      rainfallChance: 35,
-      windSpeedKm: 14,
+      currentTemp: 31,
+      condition: 'Warm & Sunny with Gentle Breeze',
+      humidity: 62,
+      rainfallChance: 15,
+      windSpeedKm: 12,
       harvestAdvisory:
-        language === 'ml'
-          ? `${region} മേഖലയിൽ നേരിയ ഈർപ്പവും മേഘാവൃതമായ അന്തരീക്ഷവുമാണ്. പച്ചക്കറികൾ ഉണക്കാനിടുന്നത് നിയന്ത്രിക്കുക. വിളവെടുത്ത ഉൽപ്പന്നങ്ങൾ സുരക്ഷിത സംഭരണശാലയിലേക്ക് മാറ്റുക.`
-          : `Moderate humidity and partial cloud cover observed in ${region}. Ideal for harvesting root crops and mature vegetables. Store harvested produce in covered, well-ventilated sheds.`,
+        language === 'te'
+          ? `${region} ప్రాంతంలో వాతావరణం అనుకూలంగా ఉంది. పత్తి, మిరప, టమోటా మరియు వరి పంట కోతకు, ఆరబెట్టడానికి ఇది సరైన సమయం. నిల్వ చేసిన పంటను తేమ తగలకుండా భద్రపరచండి.`
+          : language === 'hi'
+          ? `${region} क्षेत्र में मौसम अनुकूल और धूपदार है। मिर्च, टमाटर और धान की कटाई तथा सुखाने के लिए उत्तम समय है। कटी हुई फसल को सूखे शेड में रखें।`
+          : language === 'ml'
+          ? `${region} മേഖലയിൽ അനുകൂലമായ കാലാവസ്ഥയാണ്. പച്ചക്കറികളും നെല്ലും വിളവെടുക്കാൻ അനുയോജ്യമായ സമയം. വിളവെടുത്തവ സുരക്ഷിതമായി സൂക്ഷിക്കുക.`
+          : `Clear and warm conditions observed in ${region}, Andhra Pradesh. Ideal for harvesting chili, tomato, paddy, and horticultural crops. Ensure harvested bags are stored in dry sheds.`,
       salesAdvisory:
-        language === 'ml'
-          ? 'റോഡ് ഗതാഗതം സുഗമമാണ്. അടുത്ത 24 മണിക്കൂറിനുള്ളിൽ വിപണിയിലേക്ക് ഉൽപ്പന്നങ്ങൾ എത്തിക്കുന്നത് നല്ല വില ലഭിക്കാൻ സഹായിക്കും.'
-          : 'Road transit across Kerala Mandis is clear. Transporting fresh harvests during early morning hours avoids heat-induced spoilage.',
+        language === 'te'
+          ? 'గుంటూరు, విజయవాడ మరియు కర్నూలు APMC మార్కెట్లకు రవాణా సజావుగా సాగుతోంది. ఉదయం వేళల్లో సరుకును మార్కెట్ యార్డుకు తరలించడం ద్వారా ఉత్తమ ధర పొందవచ్చు.'
+          : language === 'hi'
+          ? 'गुंटूर, विजयवाड़ा और कर्नूल APMC मंडियों तक सड़क परिवहन सुगम है। सुबह के समय माल भेजना बेहतर रहता है।'
+          : language === 'ml'
+          ? 'ആന്ധ്ര പ്രദേശ് മാണ്ഡികളിലേക്കുള്ള ഗതാഗതം സുഗമമാണ്. അതിരാവിലെ വിപണിയിൽ എത്തിക്കുന്നത് നല്ല വില ലഭ്യമാക്കും.'
+          : 'Road transit across Andhra Pradesh APMC Mandis (Guntur, Vijayawada, Kurnool) is clear. Early morning dispatch prevents heat dehydration during highway transit.',
       forecast: [
-        { day: 'Today', tempMax: 31, tempMin: 24, condition: 'Partly Cloudy', rainChance: 30 },
-        { day: 'Tomorrow', tempMax: 30, tempMin: 23, condition: 'Scattered Showers', rainChance: 55 },
-        { day: 'Day After', tempMax: 32, tempMin: 24, condition: 'Sunny & Warm', rainChance: 20 },
+        { day: 'Today', tempMax: 33, tempMin: 23, condition: 'Sunny & Clear', rainChance: 10 },
+        { day: 'Tomorrow', tempMax: 34, tempMin: 24, condition: 'Partly Sunny', rainChance: 20 },
+        { day: 'Day After', tempMax: 32, tempMin: 23, condition: 'Warm & Breezy', rainChance: 15 },
       ],
     };
 
     return res.json({
       weather: fallbackData,
-      sources: [{ title: 'India Meteorological Department (IMD) - Kerala', uri: 'https://mausam.imd.gov.in' }],
+      sources: [
+        { title: 'India Meteorological Department (IMD) - Andhra Pradesh (Amaravati)', uri: 'https://mausam.imd.gov.in' },
+        { title: 'Andhra Pradesh Disaster Management Authority (APSDMA)', uri: 'https://apsdma.ap.gov.in' },
+      ],
       isLive: false,
     });
   }
@@ -307,7 +318,7 @@ app.post('/api/ai/generate-image', async (req, res) => {
       contents = {
         parts: [
           {
-            text: prompt || 'Freshly harvested organic Kerala cardamom pods and green bananas at a sunlit wooden market stall, high quality photography',
+            text: prompt || 'Freshly harvested organic Andhra Pradesh red chilies, ripe tomatoes and mangoes at a sunlit wooden market stall, high quality photography',
           },
         ],
       };
@@ -348,7 +359,7 @@ app.post('/api/ai/generate-image', async (req, res) => {
 
 // 4. Animate Images into Video with Veo (veo-3.1-lite-generate-preview)
 app.post('/api/ai/generate-video', async (req, res) => {
-  const { prompt = 'Fresh agricultural produce moving gently in the breeze on a Kerala farm', base64Image, aspectRatio = '16:9' } = req.body;
+  const { prompt = 'Fresh agricultural produce moving gently in the breeze on an Andhra Pradesh farm', base64Image, aspectRatio = '16:9' } = req.body;
 
   try {
     if (!process.env.GEMINI_API_KEY) {
@@ -411,7 +422,7 @@ app.post('/api/ai/video-status', async (req, res) => {
 
 // 5. Generate Music with Lyria (lyria-3-clip-preview)
 app.post('/api/ai/generate-music', async (req, res) => {
-  const { prompt = 'Upbeat acoustic Malayalam folk melody with Kerala chenda drums and acoustic flute for a village market stall' } = req.body;
+  const { prompt = 'Upbeat acoustic Telugu folk melody with traditional Andhra Pradesh nadaswaram and flute for a village market stall' } = req.body;
 
   try {
     if (!process.env.GEMINI_API_KEY) {

@@ -176,10 +176,10 @@ export const initialUsers: User[] = [
   },
   {
     id: 'buyer6',
-    name: 'Kerala Organics',
+    name: 'Andhra Pradesh Organics',
     phone: '+91 9876543225',
     type: 'buyer',
-    village: 'Kottayam',
+    village: 'Vijayawada',
     aadharNumber: '6802-4680-3579',
     rating: 4.4,
     totalReviews: 29,

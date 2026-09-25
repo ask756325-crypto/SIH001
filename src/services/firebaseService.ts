@@ -62,10 +62,10 @@ export async function signInWithGoogle(): Promise<User | null> {
     // Default new user profile
     const newUser: User = {
       id: fbUser.uid,
-      name: fbUser.displayName || 'Kerala Farmer/Buyer',
+      name: fbUser.displayName || 'Andhra Pradesh Farmer/Buyer',
       type: 'farmer',
-      village: 'Thiruvananthapuram',
-      phone: fbUser.phoneNumber || '+91 98470 12345',
+      village: 'Guntur',
+      phone: fbUser.phoneNumber || '+91 94401 23456',
       rating: 4.9,
       totalReviews: 1,
       aadharNumber: 'XXXX-XXXX-8921',
